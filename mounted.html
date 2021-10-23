@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mounted()</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div ref="example-element">Primjer komponente.</div>
+    </div>
+
+    <script>
+      const app = Vue.createApp({
+        mounted() {
+          console.log(`U ovom trenutku, vm.$el je kreiran i el je zamjenjen.`);
+          console.log(this.$el.textContent); // Primjer komponente.
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>beforeUpdate()</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app">
+      <p>{{val}} | izmjenjeno {{ count }} puta</p>
+      <button @click="val = Math.random(0, 100)">Klikni za promjenu</button>
+    </div>
+
+    <script>
+      const app = Vue.createApp({
+        setup() {
+          const count = Vue.ref(0);
+          const val = Vue.ref(0);
+
+          Vue.onBeforeUpdate(() => {
+            count.value++;
+            console.log('beforeUpdate');
+          });
+
+          Vue.onUpdated(() => {
+            console.log('updated() vrijednost val: ' + val.value);
+          });
+
+          return {
+            count,
+            val,
+          };
+        },
+        data() {
+          return {
+            val: 0,
+          };
+        },
+        beforeUpdate() {
+          console.log('beforeUpdate() vrijednost val: ' + this.val);
+        },
+        updated() {
+          console.log('updated() vrijednost val: ' + this.val);
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>activated()</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app">
+      <span @click='tabName = "Tab1"'>Tab 1 </span>
+      <span @click='tabName = "Tab2"'>Tab 2</span>
+      <keep-alive>
+        <component :is="tabName" class="tab-area" />
+      </keep-alive>
+    </div>
+
+    <script>
+      const app = Vue.createApp({
+        setup() {
+          const tabName = Vue.ref('Tab1');
+
+          return {
+            tabName,
+          };
+        },
+      });
+
+      app.component('Tab1', {
+        template: `<div>
+                     <h2>Tab 1</h2>
+                     <input type='text' placeholder='ovaj sadržaj će se zadržati!'/>
+                   </div>`,
+        setup() {
+          Vue.onActivated(() => {
+            console.log('Tab 1 Aktiviran');
+          });
+
+          Vue.onDeactivated(() => {
+            console.log('Tab 1 Deaktiviran');
+          });
+        },
+      });
+
+      app.component('Tab2', {
+        template: `<div>
+                     <h2>Tab 2</h2>
+                     <input type='text' placeholder='ovaj sadržaj će se zadržati!'/>
+                   </div>`,
+        setup() {
+          Vue.onActivated(() => {
+            console.log('Tab 2 Aktiviran');
+          });
+
+          Vue.onDeactivated(() => {
+            console.log('Tab 2 Deaktiviran');
+          });
+        },
+      });
+
+      const vm = app.mount('#app');
+    </script>
+  </body>
+</html>
